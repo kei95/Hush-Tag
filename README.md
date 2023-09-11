@@ -1,5 +1,5 @@
 # blue-x-posticide
-Get rid of impressing beggar replies from X (Twitter)
+Get rid of impression beggar replies from X (Twitter)
 
 ## Gifs
 
