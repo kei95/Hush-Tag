@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Blue Posticide",
+  "version": "1.0",
+  "description": "Remove all impression begging tweets in replies",
+  "icons": {},
+  "content_scripts": [
+    {
+      "js": ["dist/content.js"],
+      "matches": ["https://twitter.com/*"]
+    }
+  ]
+}
