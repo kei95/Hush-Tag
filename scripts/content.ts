@@ -66,11 +66,6 @@ function script(mutationsList: MutationRecord[], observer: MutationObserver) {
         const isContainJapanese = checkIsContainJapanese(
           textElement?.textContent ?? undefined
         );
-        console.log(
-          "isContainJapanese",
-          isContainJapanese,
-          textElement?.textContent
-        );
         if (
           !textElement?.querySelector("span") ||
           !textElement ||

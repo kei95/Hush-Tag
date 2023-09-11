@@ -50,7 +50,6 @@ function script(mutationsList, observer) {
                 const textElement = targetTweet.querySelector(`[data-testid="tweetText"]`);
                 // if tweet doesn't contain any Japanese character, hide it
                 const isContainJapanese = checkIsContainJapanese((_a = textElement === null || textElement === void 0 ? void 0 : textElement.textContent) !== null && _a !== void 0 ? _a : undefined);
-                console.log("isContainJapanese", isContainJapanese, textElement === null || textElement === void 0 ? void 0 : textElement.textContent);
                 if (!(textElement === null || textElement === void 0 ? void 0 : textElement.querySelector("span")) ||
                     !textElement ||
                     !isContainJapanese) {
