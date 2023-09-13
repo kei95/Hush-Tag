@@ -69,13 +69,17 @@ function hideVerifiedAccount(targetTweet: HTMLElement): boolean {
   return false;
 }
 
-function hideNonJapaneseAccount(targetTweet: HTMLElement): boolean {
-  const accountNameElement = targetTweet.querySelector(`[dir="ltr"]`);
+/** Hide element if the account name doesn't contain Japanese letter AND is verified */
+function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
+  const accountNameElement = targetTweet.querySelector(
+    `[data-testid="User-Name"]`
+  );
   const isAccountNameContainJapanese = checkIsContainJapanese(
     accountNameElement?.textContent
   );
+  const isAccountVerified = hideVerifiedAccount(targetTweet);
 
-  if (!isAccountNameContainJapanese) {
+  if (!isAccountNameContainJapanese && isAccountVerified) {
     targetTweet.style.display = "none";
     return true;
   }
@@ -125,7 +129,7 @@ function script(mutationsList: MutationRecord[], observer: MutationObserver) {
       if (skipIfTweetFromOwner(targetTweet, userId)) continue;
 
       // hide checks - if any of the following is true, hide the tweet
-      if (hideNonJapaneseAccount(targetTweet)) continue;
+      if (hideNonJapaneseVerifiedAccount(targetTweet)) continue;
       if (hideNonTweetElement(targetTweet)) continue;
       if (hideNonJapaneseTweet(targetTweet)) continue;
     }
