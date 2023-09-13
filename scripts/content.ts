@@ -29,13 +29,13 @@ function skipIfHeaderElement(targetTweet: HTMLElement): boolean {
   return false;
 }
 
-function skipIfTweetFromOwner(
-  targetTweet: HTMLElement,
-  userId: string
-): boolean {
-  const userNameNode = targetTweet.querySelector(`[data-testid="User-Name"]`);
-  const userNameWithId = userNameNode?.textContent;
-  if (userNameWithId?.includes(userId)) return true;
+function skipIfTweetFromOwner(targetTweet: HTMLElement): boolean {
+  // If the article element's `tabindex` is -1, it means it's an authors tweet
+  const replyButtonElement = targetTweet.querySelector(
+    `article[tabindex="-1"]`
+  );
+
+  if (replyButtonElement) return true;
 
   return false;
 }
@@ -126,7 +126,7 @@ function script(mutationsList: MutationRecord[], observer: MutationObserver) {
       if (!isHTMLElement(targetTweet)) continue;
       if (skipIfElementHidden(targetTweet)) continue;
       if (skipIfHeaderElement(targetTweet)) continue;
-      if (skipIfTweetFromOwner(targetTweet, userId)) continue;
+      if (skipIfTweetFromOwner(targetTweet)) continue;
 
       // hide checks - if any of the following is true, hide the tweet
       if (hideNonJapaneseVerifiedAccount(targetTweet)) continue;
