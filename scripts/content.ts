@@ -55,14 +55,13 @@ function hideNonTweetElement(targetTweet: HTMLElement): boolean {
   return false;
 }
 
-function hideVerifiedAccount(targetTweet: HTMLElement): boolean {
+function isVerifiedAccount(targetTweet: HTMLElement): boolean {
   // if the user is verified, hide it
   const isUserVerified = targetTweet.querySelector(
     `[data-testid="icon-verified"]`
   );
 
   if (isUserVerified) {
-    targetTweet.style.display = "none";
     return true;
   }
 
@@ -77,7 +76,7 @@ function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
   const isAccountNameContainJapanese = checkIsContainJapanese(
     accountNameElement?.textContent
   );
-  const isAccountVerified = hideVerifiedAccount(targetTweet);
+  const isAccountVerified = isVerifiedAccount(targetTweet);
 
   if (!isAccountNameContainJapanese && isAccountVerified) {
     targetTweet.style.display = "none";
