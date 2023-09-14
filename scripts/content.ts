@@ -104,7 +104,7 @@ function hideNonJapaneseTweet(targetTweet: HTMLElement): boolean {
   return false;
 }
 
-function script(mutationsList: MutationRecord[], observer: MutationObserver) {
+function script() {
   const isAtRepliesPage = window.location.pathname.includes("status");
   if (!isAtRepliesPage) {
     return;

@@ -75,7 +75,7 @@ function hideNonJapaneseTweet(targetTweet) {
     }
     return false;
 }
-function script(mutationsList, observer) {
+function script() {
     const isAtRepliesPage = window.location.pathname.includes("status");
     if (!isAtRepliesPage) {
         return;
