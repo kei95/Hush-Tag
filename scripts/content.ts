@@ -1,5 +1,5 @@
 // =============== util functions ===============
-/** Util function to narrow down element to HTMLElement */
+/** Util function to narrow down element to HTMLElement to help TS to narrow down given element type */
 function isHTMLElement(element: Element | Node | null): element is HTMLElement {
   return element instanceof HTMLElement;
 }
@@ -138,11 +138,8 @@ function script(mutationsList: MutationRecord[], observer: MutationObserver) {
 // Create a MutationObserver to trigger the script when DOM updates
 const observer = new MutationObserver(script);
 
-// Specify the target node and the type of mutations to observe
-const targetNode = document.body;
-
 // Start observing the target node for mutations
-observer.observe(targetNode, {
+observer.observe(document.body, {
   childList: true,
   subtree: true,
 });
