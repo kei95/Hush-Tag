@@ -1,9 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Blue Posticide",
+  "name": "Hush Tag - インプレッション稼ぎサプレッサー",
   "version": "1.0",
-  "description": "Remove all impression begging tweets in replies",
-  "icons": {},
+  "description": "インプレッション稼ぎのリプ達に静かにしてもらいましょう",
+  "icons": {
+    "16": "images/images-16.png",
+    "32": "images/images-32.png",
+    "48": "images/images-48.png",
+    "128": "images/images-128.png"
+  },
   "content_scripts": [
     {
       "js": ["dist/content.js"],
