@@ -75,16 +75,19 @@ function hideNonJapaneseTweet(targetTweet) {
     }
     return false;
 }
+/** Script to run when observer catches DOM updates */
 function script() {
+    // when it's not on reply page, do nothing
     const isAtRepliesPage = window.location.pathname.includes("status");
     if (!isAtRepliesPage) {
         return;
     }
     const baseElement = document.body.querySelector('[aria-label="Timeline: Conversation"]');
     const targetTweets = baseElement === null || baseElement === void 0 ? void 0 : baseElement.querySelectorAll('[data-testid="cellInnerDiv"]');
-    // When mutation happens, iterate through tweets
+    // if targetTweets don't exist in DOM, skip the execution
     if (!targetTweets)
         return;
+    // Iterate though tweets and apply style update to hide ones that are "inappropriate"
     for (const targetTweet of targetTweets) {
         // skip checks - if any of the following is true, skip the check
         if (!isHTMLElement(targetTweet))
