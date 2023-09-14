@@ -63,14 +63,6 @@ function hideNonJapaneseVerifiedAccount(targetTweet) {
     }
     return false;
 }
-function hideVerifiedAccount(targetTweet) {
-    const isAccountVerified = isVerifiedAccount(targetTweet);
-    if (isAccountVerified) {
-        targetTweet.style.display = "none";
-        return true;
-    }
-    return false;
-}
 function hideNonJapaneseTweet(targetTweet) {
     var _a;
     // get text part of the given target tweet element

@@ -86,17 +86,6 @@ function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
   return false;
 }
 
-function hideVerifiedAccount(targetTweet: HTMLElement) {
-  const isAccountVerified = isVerifiedAccount(targetTweet);
-
-  if (isAccountVerified) {
-    targetTweet.style.display = "none";
-    return true;
-  }
-
-  return false;
-}
-
 function hideNonJapaneseTweet(targetTweet: HTMLElement): boolean {
   // get text part of the given target tweet element
   const tweetTextElement = targetTweet.querySelector(
