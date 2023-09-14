@@ -4,10 +4,10 @@
   "version": "1.0",
   "description": "インプレッション稼ぎのリプ達に静かにしてもらいましょう",
   "icons": {
-    "16": "images/images-16.png",
-    "32": "images/images-32.png",
-    "48": "images/images-48.png",
-    "128": "images/images-128.png"
+    "16": "images/HushTag-16.png",
+    "32": "images/HushTag-32.png",
+    "48": "images/HushTag-48.png",
+    "128": "images/HushTag-128.png"
   },
   "content_scripts": [
     {
