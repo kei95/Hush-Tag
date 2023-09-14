@@ -1,6 +1,6 @@
 // =============== util functions ===============
 /** Util function to narrow down element to HTMLElement */
-function isHTMLElement(element: Element): element is HTMLElement {
+function isHTMLElement(element: Element | Node | null): element is HTMLElement {
   return element instanceof HTMLElement;
 }
 
@@ -86,6 +86,17 @@ function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
   return false;
 }
 
+function hideVerifiedAccount(targetTweet: HTMLElement) {
+  const isAccountVerified = isVerifiedAccount(targetTweet);
+
+  if (isAccountVerified) {
+    targetTweet.style.display = "none";
+    return true;
+  }
+
+  return false;
+}
+
 function hideNonJapaneseTweet(targetTweet: HTMLElement): boolean {
   // get text part of the given target tweet element
   const tweetTextElement = targetTweet.querySelector(
@@ -110,28 +121,28 @@ function script(mutationsList: MutationRecord[], observer: MutationObserver) {
     return;
   }
 
-  const userId = window.location.pathname.split("/")[1];
+  const baseElement = document.body.querySelector(
+    '[aria-label="Timeline: Conversation"]'
+  );
+
+  const targetTweets = baseElement?.querySelectorAll(
+    '[data-testid="cellInnerDiv"]'
+  );
 
   // When mutation happens, iterate through tweets
-  for (const mutation of mutationsList) {
-    if (mutation.type !== "childList" || mutation.addedNodes.length === 0)
-      return;
-    const targetTweets = document.querySelectorAll(
-      '[data-testid="cellInnerDiv"]'
-    );
+  if (!targetTweets) return;
 
-    for (const targetTweet of targetTweets) {
-      // skip checks - if any of the following is true, skip the check
-      if (!isHTMLElement(targetTweet)) continue;
-      if (skipIfElementHidden(targetTweet)) continue;
-      if (skipIfHeaderElement(targetTweet)) continue;
-      if (skipIfTweetFromOwner(targetTweet)) continue;
+  for (const targetTweet of targetTweets) {
+    // skip checks - if any of the following is true, skip the check
+    if (!isHTMLElement(targetTweet)) continue;
+    if (skipIfElementHidden(targetTweet)) continue;
+    if (skipIfHeaderElement(targetTweet)) continue;
+    if (skipIfTweetFromOwner(targetTweet)) continue;
 
-      // hide checks - if any of the following is true, hide the tweet
-      if (hideNonJapaneseVerifiedAccount(targetTweet)) continue;
-      if (hideNonTweetElement(targetTweet)) continue;
-      if (hideNonJapaneseTweet(targetTweet)) continue;
-    }
+    // hide checks - if any of the following is true, hide the tweet
+    if (hideNonTweetElement(targetTweet)) continue;
+    if (hideNonJapaneseVerifiedAccount(targetTweet)) continue;
+    if (hideNonJapaneseTweet(targetTweet)) continue;
   }
 }
 
@@ -142,4 +153,7 @@ const observer = new MutationObserver(script);
 const targetNode = document.body;
 
 // Start observing the target node for mutations
-observer.observe(targetNode, { childList: true, subtree: true });
+observer.observe(targetNode, {
+  childList: true,
+  subtree: true,
+});
