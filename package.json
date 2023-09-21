@@ -1,9 +1,13 @@
 {
   "scripts": {
-    "build": "tsc --build -w",
+    "tsc": "tsc --noEmit",
+    "build:watch": "vite build --watch",
+    "build": "tsc --noEmit && vite build",
     "clean": "tsc --build --clean"
   },
   "devDependencies": {
-    "typescript": "^5.2.2"
+    "@crxjs/vite-plugin": "^1.0.14",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9"
   }
 }
