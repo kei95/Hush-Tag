@@ -11,8 +11,23 @@
   },
   "content_scripts": [
     {
-      "js": ["/scripts/content.ts"],
-      "matches": ["https://twitter.com/*"]
+      "js": [
+        "assets/content-script-loader.content.ts-7e0fa926-9af6ed63.js"
+      ],
+      "matches": [
+        "https://twitter.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "resources": [
+        "assets/content.ts-7e0fa926.js"
+      ],
+      "use_dynamic_url": true
     }
   ]
 }
