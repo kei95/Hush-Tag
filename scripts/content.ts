@@ -1,8 +1,20 @@
-// TODO:
-// 1. Figure out the way to make import useable. (prob using bundler like vite or webpack)
-// 2. Use jsKanjiRegex to exclude Chinese letters
-// 3. Update checkIsContainJapanese with it
-import { jpKanjiRegex } from "./jpKanjiRegex";
+import { chineseLetterRegex } from "./chineseLetterRegex";
+
+// TODO: Get this function working properly to exclude chinese accounts
+// function isContainChineseCharacter(inputString: string | null | undefined) {
+//   if (!inputString) return false;
+
+//   const kanjiCharRegex = /[\p{Script=Han}々〆〤]+/gu;
+//   const kanjiCharacters = inputString.match(kanjiCharRegex);
+
+//   if (!kanjiCharacters) return false;
+
+//   for (const char of kanjiCharacters) {
+//     if (chineseLetterRegex.test(char)) return true;
+//   }
+
+//   return false;
+// }
 
 // =============== util functions ===============
 /** Util function to narrow down element to HTMLElement to help TS to narrow down given element type */
@@ -82,7 +94,17 @@ function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
   const isAccountNameContainJapanese = checkIsContainJapanese(
     accountNameElement?.textContent
   );
+  // const isAccountContainChinese = isContainChineseCharacter(
+  //   accountNameElement?.textContent
+  // );
   const isAccountVerified = isVerifiedAccount(targetTweet);
+
+  // console.log(
+  //   "is the following account deleted?",
+  //   accountNameElement?.textContent,
+  //   (!isAccountNameContainJapanese || isAccountContainChinese) &&
+  //     isAccountVerified
+  // );
 
   if (!isAccountNameContainJapanese && isAccountVerified) {
     targetTweet.style.display = "none";

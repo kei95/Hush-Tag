@@ -1,6 +1,7 @@
 {
   "scripts": {
     "tsc": "tsc --noEmit",
+    "tsc:watch": "tsc --noEmit --watch",
     "build:watch": "vite build --watch",
     "build": "tsc --noEmit && vite build",
     "clean": "tsc --build --clean"
