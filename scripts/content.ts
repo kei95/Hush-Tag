@@ -1,3 +1,9 @@
+// TODO:
+// 1. Figure out the way to make import useable. (prob using bundler like vite or webpack)
+// 2. Use jsKanjiRegex to exclude Chinese letters
+// 3. Update checkIsContainJapanese with it
+import { jpKanjiRegex } from "./jpKanjiRegex";
+
 // =============== util functions ===============
 /** Util function to narrow down element to HTMLElement to help TS to narrow down given element type */
 function isHTMLElement(element: Element | Node | null): element is HTMLElement {
