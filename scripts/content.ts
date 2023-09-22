@@ -1,21 +1,3 @@
-import { chineseLetterRegex } from "./chineseLetterRegex";
-
-// TODO: Get this function working properly to exclude chinese accounts
-// function isContainChineseCharacter(inputString: string | null | undefined) {
-//   if (!inputString) return false;
-
-//   const kanjiCharRegex = /[\p{Script=Han}々〆〤]+/gu;
-//   const kanjiCharacters = inputString.match(kanjiCharRegex);
-
-//   if (!kanjiCharacters) return false;
-
-//   for (const char of kanjiCharacters) {
-//     if (chineseLetterRegex.test(char)) return true;
-//   }
-
-//   return false;
-// }
-
 // =============== util functions ===============
 /** Util function to narrow down element to HTMLElement to help TS to narrow down given element type */
 function isHTMLElement(element: Element | Node | null): element is HTMLElement {
@@ -26,8 +8,8 @@ function checkIsContainJapanese(inputString?: string | null) {
   if (!inputString) return false;
 
   // Define a regular expression pattern for Japanese characters
-  const japaneseCharacterPattern =
-    /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}々〆〤]+/u;
+  // Excluded Kanji check as only kanji sentence = Non-Japanese
+  const japaneseCharacterPattern = /[\p{Script=Hiragana}\p{Script=Katakana}]+/u;
 
   // Test the input string against the pattern
   return japaneseCharacterPattern.test(inputString);
@@ -88,25 +70,17 @@ function isVerifiedAccount(targetTweet: HTMLElement): boolean {
 
 /** Hide element if the account name doesn't contain Japanese letter AND is verified */
 function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
+  const isAccountVerified = isVerifiedAccount(targetTweet); // if not verified, skip the check
+  if (!isAccountVerified) return false;
+
   const accountNameElement = targetTweet.querySelector(
     `[data-testid="User-Name"]`
   );
   const isAccountNameContainJapanese = checkIsContainJapanese(
     accountNameElement?.textContent
   );
-  // const isAccountContainChinese = isContainChineseCharacter(
-  //   accountNameElement?.textContent
-  // );
-  const isAccountVerified = isVerifiedAccount(targetTweet);
 
-  // console.log(
-  //   "is the following account deleted?",
-  //   accountNameElement?.textContent,
-  //   (!isAccountNameContainJapanese || isAccountContainChinese) &&
-  //     isAccountVerified
-  // );
-
-  if (!isAccountNameContainJapanese && isAccountVerified) {
+  if (!isAccountNameContainJapanese) {
     targetTweet.style.display = "none";
     return true;
   }
