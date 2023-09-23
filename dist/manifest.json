@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Hush Tag - インプレッション稼ぎのクソリプを隠しちゃおう",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "インプレッション稼ぎのクソリプ達に静かにしてもらいましょう",
   "icons": {
     "16": "images/HushTag-16.png",
@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.content.ts-2f6a6568-7fc4e5af.js"
+        "assets/content-script-loader.content.ts-94215e42-6f729368.js"
       ],
       "matches": [
         "https://twitter.com/*"
@@ -25,7 +25,7 @@
         "https://twitter.com/*"
       ],
       "resources": [
-        "assets/content.ts-2f6a6568.js"
+        "assets/content.ts-94215e42.js"
       ],
       "use_dynamic_url": true
     }
