@@ -1,109 +1,17 @@
+import {
+  hideNonTweetElement,
+  hideSpecificAccount,
+  hideNonJapaneseTweet,
+} from "./hideFlags";
+import {
+  checkIfHTMLElement,
+  skipIfTweetIsHidden,
+  skipIfTweetFromOwner,
+} from "./skipFlags";
+
 // =============== util functions ===============
-/** Util function to narrow down element to HTMLElement to help TS to narrow down given element type */
-function isHTMLElement(element: Element | Node | null): element is HTMLElement {
-  return element instanceof HTMLElement;
-}
-
-function checkIsContainJapanese(inputString?: string | null) {
-  if (!inputString) return false;
-
-  // Define a regular expression pattern for Japanese characters
-  // Excluded Kanji check as only kanji sentence = Non-Japanese
-  const japaneseCharacterPattern = /[\p{Script=Hiragana}\p{Script=Katakana}]+/u;
-
-  // Test the input string against the pattern
-  return japaneseCharacterPattern.test(inputString);
-}
-
-// =============== skip flags ===============
-// Returns boolean to tell the target tweet should skip the check.
-// If true, there's no need for executing logics to check beyond that
-
-function skipIfElementHidden(targetTweet: HTMLElement): boolean {
-  if (targetTweet.style["display"] === "none") return true;
-  return false;
-}
-
-function skipIfHeaderElement(targetTweet: HTMLElement): boolean {
-  if (targetTweet.querySelector(`[role="heading"]`)) return true;
-  return false;
-}
-
-function skipIfTweetFromOwner(targetTweet: HTMLElement): boolean {
-  // If the article element's `tabindex` is -1, it means it's an authors tweet
-  const replyButtonElement = targetTweet.querySelector(
-    `article[tabindex="-1"]`
-  );
-
-  if (replyButtonElement) return true;
-
-  return false;
-}
-
-// =============== disable flags ===============
-// Returns boolean to tell the target tweet has been hidden by this function.
-// If so, there's no need for executing logics to check beyond that
-
-function hideNonTweetElement(targetTweet: HTMLElement): boolean {
-  // if the given element is just for "show replies" hide it
-  const isElementTweet = targetTweet.querySelector("article");
-  if (!isElementTweet) {
-    targetTweet.style.display = "none";
-    return true;
-  }
-
-  return false;
-}
-
-function isVerifiedAccount(targetTweet: HTMLElement): boolean {
-  // if the user is verified, hide it
-  const isUserVerified = targetTweet.querySelector(
-    `[data-testid="icon-verified"]`
-  );
-
-  if (isUserVerified) {
-    return true;
-  }
-
-  return false;
-}
-
-/** Hide element if the account name doesn't contain Japanese letter AND is verified */
-function hideNonJapaneseVerifiedAccount(targetTweet: HTMLElement): boolean {
-  const isAccountVerified = isVerifiedAccount(targetTweet); // if not verified, skip the check
-  if (!isAccountVerified) return false;
-
-  const accountNameElement = targetTweet.querySelector(
-    `[data-testid="User-Name"]`
-  );
-  const isAccountNameContainJapanese = checkIsContainJapanese(
-    accountNameElement?.textContent
-  );
-
-  if (!isAccountNameContainJapanese) {
-    targetTweet.style.display = "none";
-    return true;
-  }
-
-  return false;
-}
-
-function hideNonJapaneseTweet(targetTweet: HTMLElement): boolean {
-  // get text part of the given target tweet element
-  const tweetTextElement = targetTweet.querySelector(
-    `[data-testid="tweetText"]`
-  );
-  const isContainJapanese = checkIsContainJapanese(
-    tweetTextElement?.textContent ?? undefined
-  );
-  const isTweetTextContainCharacter = tweetTextElement?.querySelector("span");
-
-  if (!isTweetTextContainCharacter || !tweetTextElement || !isContainJapanese) {
-    targetTweet.style.display = "none";
-    return true;
-  }
-
-  return false;
+function hideTweet(targetTWeet: HTMLElement) {
+  targetTWeet.style.display = "none";
 }
 
 /** Script to run when observer catches DOM updates */
@@ -127,15 +35,23 @@ function script() {
   // Iterate though tweets and apply style update to hide ones that are "inappropriate"
   for (const targetTweet of targetTweets) {
     // skip checks - if any of the following is true, skip the check
-    if (!isHTMLElement(targetTweet)) continue;
-    if (skipIfElementHidden(targetTweet)) continue;
-    if (skipIfHeaderElement(targetTweet)) continue;
+    if (!checkIfHTMLElement(targetTweet)) continue;
+    if (skipIfTweetIsHidden(targetTweet)) continue;
     if (skipIfTweetFromOwner(targetTweet)) continue;
 
     // hide checks - if any of the following is true, hide the tweet
-    if (hideNonTweetElement(targetTweet)) continue;
-    if (hideNonJapaneseVerifiedAccount(targetTweet)) continue;
-    if (hideNonJapaneseTweet(targetTweet)) continue;
+    if (hideNonTweetElement(targetTweet)) {
+      hideTweet(targetTweet);
+      continue;
+    }
+    if (hideSpecificAccount(targetTweet)) {
+      hideTweet(targetTweet);
+      continue;
+    }
+    if (hideNonJapaneseTweet(targetTweet)) {
+      hideTweet(targetTweet);
+      continue;
+    }
   }
 }
 
