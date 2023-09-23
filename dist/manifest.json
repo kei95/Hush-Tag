@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Hush Tag - インプレッション稼ぎサプレッサー",
+  "name": "Hush Tag - インプレッション稼ぎのクソリプを隠しちゃおう",
   "version": "1.1.0",
-  "description": "インプレッション稼ぎのリプ達に静かにしてもらいましょう",
+  "description": "インプレッション稼ぎのクソリプ達に静かにしてもらいましょう",
   "icons": {
     "16": "images/HushTag-16.png",
     "32": "images/HushTag-32.png",
