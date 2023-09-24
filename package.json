@@ -4,11 +4,14 @@
     "tsc:watch": "tsc --noEmit --watch",
     "build:watch": "vite build --watch",
     "build": "tsc --noEmit && vite build",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean",
+    "test": "vitest"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.14",
+    "jsdom": "^22.1.0",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vitest": "^0.34.5"
   }
 }
