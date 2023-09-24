@@ -3,7 +3,7 @@
 // If so, there's no need for executing logics to check beyond that
 
 /** Util function to tell if the account is verified */
-function checkIsVerifiedAccount(targetTweet: HTMLElement): boolean {
+export function checkIsVerifiedAccount(targetTweet: HTMLElement): boolean {
   // if the user is verified, hide it
   const isUserVerified = targetTweet.querySelector(
     `[data-testid="icon-verified"]`
@@ -17,7 +17,7 @@ function checkIsVerifiedAccount(targetTweet: HTMLElement): boolean {
 }
 
 /** Util function to tell if the given string contain Japanese */
-function checkIsContainJapanese(inputString?: string | null) {
+export function checkIsContainJapanese(inputString?: string | null) {
   if (!inputString) return false;
 
   // Define a regular expression pattern for Japanese characters
@@ -29,7 +29,7 @@ function checkIsContainJapanese(inputString?: string | null) {
 }
 
 /** Util function to detect given input string mentions NFT */
-function checkIsMentionNFT(inputString?: string | null) {
+export function checkIsMentionNFT(inputString?: string | null) {
   if (!inputString) return false;
 
   const nftWord = /NFT/i;
